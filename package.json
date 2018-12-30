@@ -1,0 +1,27 @@
+{
+  "name": "scratcher",
+  "version": "0.1.0",
+  "description": "A scratchcard simulater based on canvas",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "FloristX <shufe.florist@gmail.com> ",
+  "license": "MIT",
+  "keywords": [
+    "scratchcard",
+    "canvas",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Florist-CN/Scratcher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Florist-CN/Scratcher/issues"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  }
+}
