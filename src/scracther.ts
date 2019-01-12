@@ -40,7 +40,8 @@ export class Scratcher {
     private touchEventHandler = (e: TouchEvent) => {
         e.preventDefault();
         const { left, top } = this.backcanvas.getBoundingClientRect();
-        Array.from(e.changedTouches).map(touch => {
+        const touches = Array.prototype.slice.call(e.changedTouches) as Touch[];
+        touches.map(touch => {
             return { x: touch.clientX - left, y: touch.clientY - top };
         }).forEach(point => this.points.push(point));
     }
