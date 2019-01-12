@@ -23,5 +23,9 @@
   },
   "devDependencies": {
     "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.1",
+    "lodash-es": "^4.17.11"
   }
 }

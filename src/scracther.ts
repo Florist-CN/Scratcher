@@ -1,5 +1,6 @@
 import { ScratcherOptions } from './scratcher-options';
 import { calculateCanvasPixcel } from './utils';
+import { debounce } from 'lodash-es';
 
 type Point = {
     x: number;
@@ -21,11 +22,15 @@ export class Scratcher {
 
     private clearCallBacks: (() => any)[] = [];
 
+    private width?: number;
+    private height?: number;
+
+    private deboucedResize = debounce(this.resize,100);
+
     private resizeHandler = () => {
-        this.resizeCanvas();
-        this.mask.drawImage(this.maskImage, 0, 0, this.backcanvas.width, this.backcanvas.height);
-        this.repaintCanvas();
-        this.points = [];
+        if(!this.width && !this.height){
+            this.deboucedResize();  
+        }
     }
     private mouseEventHandler = (e: MouseEvent) => {
         e.preventDefault();
@@ -46,7 +51,18 @@ export class Scratcher {
 
     constructor(private options: ScratcherOptions) {
         this.createCanvas()
+        this.width = options.width;
+        this.height = options.height;
         this.init();
+    }
+
+    resize(width?:number, height?:number){
+        this.width = width
+        this.height = height
+        this.resizeCanvas();
+        this.mask.drawImage(this.maskImage, 0, 0, this.maskCanvas.width, this.maskCanvas.height);
+        this.repaintCanvas();
+        this.points = [];
     }
 
     clear(clearDuration: number) {
@@ -103,8 +119,8 @@ export class Scratcher {
 
     private resizeCanvas() {
         const ratio = this.backImage.naturalHeight / this.backImage.naturalWidth;
-        this.maskCanvas.width = this.backcanvas.width = this.options.container.clientWidth;
-        this.maskCanvas.height = this.backcanvas.height = this.backcanvas.width * ratio;
+        this.maskCanvas.width = this.backcanvas.width = this.width || this.options.container.clientWidth;
+        this.maskCanvas.height = this.backcanvas.height = this.height || this.options.container.clientWidth * ratio;
     }
 
     private repaintCanvas() {
